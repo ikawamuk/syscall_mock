@@ -1,0 +1,8 @@
+# Build artifacts
+*.o
+*.a
+*.so
+*.dylib
+*.out
+a.out
+
