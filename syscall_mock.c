@@ -6,12 +6,11 @@
 /*   By: ikawamuk <ikawamuk@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 19:11:39 by ikawamuk          #+#    #+#             */
-/*   Updated: 2026/03/11 19:14:49 by ikawamuk         ###   ########.fr       */
+/*   Updated: 2026/03/11 19:17:55 by ikawamuk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "syscall_mock.h"
-#include "list.h"
 #include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -22,6 +21,7 @@ void	__real_free(void *ptr);
 ssize_t	__real_read(int fd, void *buf, size_t count);
 int		__real_open(const char *pathname, int flags);
 void	ft_lstadd_back(t_list **lst, t_list *new);
+t_list	*ft_lstlast(t_list *lst);
 
 int						_wrap_errno_ = 0;
 enum e_error_syscall	err_syscall = NOTHING;
@@ -114,4 +114,19 @@ void	__wrap_exit(int status)
 {
 	g_last_exit_status = status;
 	longjmp(g_test_jump_env, 1);
+}
+
+void	ft_lstadd_back(t_list **lst, t_list *new)
+{
+	if (*lst == NULL)
+		*lst = new;
+	else
+		ft_lstlast(*lst)->next = new;
+}
+
+t_list	*ft_lstlast(t_list *lst)
+{
+	while (lst->next != NULL)
+		lst = lst->next;
+	return (lst);
 }
