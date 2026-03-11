@@ -8,6 +8,8 @@
 - `read` / `open`：失敗させて `errno` を設定
 - `exit`：プロセス終了せず `longjmp` でテストに戻す
 
+- 他にも`__wrap_FUNCTOINNAME`を作成して任意のモックを作成してください
+
 ## 使い方（リンク）
 
 `syscall_mock.c` をテスト用バイナリに一緒にリンクし、対象シンボルを `--wrap` します。
